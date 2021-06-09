@@ -7,9 +7,12 @@ width = 650
 height = 650
 
 g_l = 9.8
-M = 200000
+g = 6.67 * 10**(-11)
+planet_weight = 6 * 10**(24)
+R = 6371*10**3
+M = 2000000
 a_max = 29.43
-m = 5000
+m = 1000000
 M += m
 v_0 = int(input("введите скорость истечения газа "))
 delta_m = int(input("введите скорость сжигания топлива "))
@@ -56,6 +59,7 @@ while m > 0:
    cur_time += time
    H_prev = H
    S_prev = S
+   g_l = g * planet_weight / (R + H)**2
    v_y, v_x, H, S = autopilot_weight_change(alpha, delta_m, time)
    alpha = atan((H - H_prev) / (S - S_prev))
    print(f"V_x = {v_x} V_y = {v_y} V = {(v_x * v_x + v_y * v_y)**0.5} угол положения двигателя {alpha * 180 / pi} топлива {m}, время полета {cur_time} S = {S} H = {H}")
@@ -68,6 +72,7 @@ while H > 0:
      cur_time += time
      H_prev = H
      S_prev = S
+     g_l = g * planet_weight / (R + H)**2
      v_y, v_x, H, S = autopilot_weight_const(alpha, delta_m, time, v_x)
      alpha = atan((H - H_prev) / (S - S_prev))
      print(f"V_x = {v_x} V_y = {v_y} V = {(v_x * v_x + v_y * v_y)**0.5}  угол положения двигателя {alpha * 180 / pi} топлива {m}, время полета {cur_time} S = {S} H = {H}")
